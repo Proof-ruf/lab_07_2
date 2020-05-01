@@ -3,6 +3,7 @@
 #ifndef INCLUDE_HEADER_HPP_
 #define INCLUDE_HEADER_HPP_
 #include <iostream>
+#include <string>
 #include <boost/thread.hpp>
 #include <boost/asio.hpp>
 #include <chrono>
@@ -32,7 +33,7 @@ const char CONNECTED[] = "client connected ";
 const char PING_OK[] = "ping ok\n";
 const char LIST_CHANED[] = "client list chaned\n";
 const char LOGIN_OK[] = "login ok\n";
-using sock= boost::asio::ip::tcp::socket;
+using sock = boost::asio::ip::tcp::socket;
 using endpoint = boost::asio::ip::tcp::endpoint;
 using acceptor = boost::asio::ip::tcp::acceptor;
 using io_context = boost::asio::io_context;
@@ -50,7 +51,7 @@ private:
     bool client_list_chaned = true;
 
 public:
-    talk_to_client() : sock_(context) {};
+    talk_to_client() : sock_(context) {}
     sock &my_socket() { return sock_; }
     std::string &username() { return username_; }
     bool &list_chaned() {return client_list_chaned; }
@@ -106,7 +107,8 @@ public:
     }
 
     bool timed_out() const {
-        boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+        boost::posix_time::ptime now = 
+        boost::posix_time::microsec_clock::local_time();
         long long ms = (now - last_ping).total_milliseconds();
         return ms > TIME_OUT;
         }
@@ -155,7 +157,8 @@ void handle_clients_thread() {
                     continue;
                 }
                 (*client)->stop();
-                std::cout << (*client)->username() << " " << e.what() << std::endl;
+                std::cout << (*client)->username() <<
+                    " " << e.what() << std::endl;
                 for (auto &elem : clients) {
                     elem->list_chaned() = false;
                 }
@@ -176,7 +179,7 @@ void init() {
                     boost::log::keywords::file_name = PWD ,
                     boost::log::keywords::rotation_size = SIZE_FILE ,
                     boost::log::keywords::time_based_rotation =
-                            boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
+                        boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
                     boost::log::keywords::format =
                             "[%TimeStamp%] [%Severity%] %Message%");
     boost::log::add_console_log
