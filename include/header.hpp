@@ -41,8 +41,10 @@ using input_ip = boost::asio::ip::address;
 using std::int64_t;
 io_context context;
 std::mutex mutex;
+
 struct talk_to_client;
 std::vector<std::shared_ptr<talk_to_client>> clients;
+
 struct talk_to_client {
 private:
     std::string answ;
