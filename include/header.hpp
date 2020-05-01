@@ -38,6 +38,7 @@ using endpoint = boost::asio::ip::tcp::endpoint;
 using acceptor = boost::asio::ip::tcp::acceptor;
 using io_context = boost::asio::io_context;
 using input_ip = boost::asio::ip::address;
+using std::int64_t;
 io_context context;
 std::mutex mutex;
 struct talk_to_client;
@@ -107,9 +108,9 @@ public:
     }
 
     bool timed_out() const {
-        boost::posix_time::ptime now = 
+        boost::posix_time::ptime now =
         boost::posix_time::microsec_clock::local_time();
-        long long ms = (now - last_ping).total_milliseconds();
+        int64_t ms = (now - last_ping).total_milliseconds();
         return ms > TIME_OUT;
         }
 
@@ -149,7 +150,8 @@ void handle_clients_thread() {
                 if (!strcmp(type_exeption, e.what())) {
                     if ((*client)->timed_out()) {
                         (*client)->stop();
-                        std::cout << (*client)->username() << " " << e.what() << std::endl;
+                        std::cout << (*client)->username()
+                        << " " << e.what() << std::endl;
                         ++client;
                         continue;
                     }
@@ -176,12 +178,12 @@ void init() {
             <boost::log::trivial::severity_level, char>(ATTR_NAME);
     boost::log::add_file_log
             (
-                    boost::log::keywords::file_name = PWD ,
-                    boost::log::keywords::rotation_size = SIZE_FILE ,
-                    boost::log::keywords::time_based_rotation =
-                        boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
-                    boost::log::keywords::format =
-                            "[%TimeStamp%] [%Severity%] %Message%");
+                boost::log::keywords::file_name = PWD ,
+                boost::log::keywords::rotation_size = SIZE_FILE ,
+                boost::log::keywords::time_based_rotation =
+                    boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
+                boost::log::keywords::format =
+                        "[%TimeStamp%] [%Severity%] %Message%");
     boost::log::add_console_log
             (
                     std::cout,
