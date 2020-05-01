@@ -69,7 +69,7 @@ public:
         boost::asio::read_until(my_socket(), buffer, '\n');
 
         std::string answer(std::istreambuf_iterator<char>{&buffer},
-                           std::istreambuf_iterator<char>{}); //(c) MoraPresence
+                           std::istreambuf_iterator<char>{});
         answ = answer;
     }
 
