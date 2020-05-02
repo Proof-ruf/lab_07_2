@@ -60,7 +60,7 @@ void talk_to_client::process_request() {
     if (answ.find(CLIENTS) == 0) client_list();
 }
 
-bool talk_to_client::timed_out() const {
+bool talk_to_client::timed_out() const{
     boost::posix_time::ptime now = 
     boost::posix_time::microsec_clock::local_time();
     int64_t ms = (now - last_ping).total_milliseconds();
@@ -100,7 +100,7 @@ void handle_clients_thread() {
                 (*client)->process_request();
             } catch (boost::system::system_error &e) {
                 if (!strcmp(type_exeption, e.what())) {
-                    if ((*client)->timed_out()) {
+                    if ((*client)->timed_out()){
                         (*client)->stop();
                         std::cout << (*client)->username() 
                             << " " << e.what() << std::endl;
@@ -133,8 +133,8 @@ void init() {
                 boost::log::keywords::file_name = PWD ,
                 boost::log::keywords::rotation_size = SIZE_FILE ,
                 boost::log::keywords::time_based_rotation =
-                        boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
-                boost::log::keywords::format = OUTPUT_FORMAT );
+                boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
+                boost::log::keywords::format = OUTPUT_FORMAT);
     boost::log::add_console_log
             (
                     std::cout,
