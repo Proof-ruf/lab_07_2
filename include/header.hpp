@@ -42,6 +42,7 @@ using endpoint = boost::asio::ip::tcp::endpoint;
 using acceptor = boost::asio::ip::tcp::acceptor;
 using io_context = boost::asio::io_context;
 using input_ip = boost::asio::ip::address;
+using int64_t;
 io_context context;
 std::mutex mutex;
 struct talk_to_client{
