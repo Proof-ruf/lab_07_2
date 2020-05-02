@@ -17,6 +17,7 @@
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 #include <cstring>
+#include <string>
 
 #define SIZE_FILE 10 * 1024 * 1024
 #define TIME_OUT 5000
