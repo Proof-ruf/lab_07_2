@@ -34,7 +34,8 @@ void talk_to_client::login(std::string msg) {
     }
 
 void talk_to_client::ping() {
-    last_ping = boost::posix_time::microsec_clock::local_time();
+    last_ping = 
+    boost::posix_time::microsec_clock::local_time();
     if (client_list_chaned == true) {
         write(PING_OK);
     } else {
