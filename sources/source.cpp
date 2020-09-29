@@ -16,6 +16,7 @@ void talk_to_client::write(const std::string &msg) {
     boost::asio::write(my_socket(), buffer);
 }
 
+
 void talk_to_client::read_answer() {
     boost::asio::streambuf buffer{};
     boost::asio::read_until(my_socket(), buffer, '\n');
@@ -24,6 +25,7 @@ void talk_to_client::read_answer() {
             std::istreambuf_iterator<char>{});
         answ = answer;
     }
+
 
 void talk_to_client::login(std::string msg) {
     msg = msg.substr(5, msg.size());
@@ -44,6 +46,7 @@ void talk_to_client::ping() {
     }
 }
 
+
 void talk_to_client::client_list() {
     std::string msg;
     msg = "List for " + username_ + ": ";
@@ -59,6 +62,7 @@ void talk_to_client::process_request() {
     if (answ.find(PING) == 0) ping();
     if (answ.find(CLIENTS) == 0) client_list();
 }
+
 
 bool talk_to_client::timed_out() const{
     boost::posix_time::ptime now =

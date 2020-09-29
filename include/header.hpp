@@ -24,6 +24,7 @@
 #define PORT_NUM 8001
 #define SECONDS 1
 
+
 const char PWD[] = "/home/darioshka/Desktop/my_file%N.log";
 const char ATTR_NAME[] = "Severity";
 const char type_exeption[] = "read_until: Resource temporarily unavailable";
@@ -46,6 +47,7 @@ using input_ip = boost::asio::ip::address;
 using std::int64_t;
 io_context context;
 std::mutex mutex;
+
 struct talk_to_client{
 private:
     std::string answ;
